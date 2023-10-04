@@ -1,5 +1,72 @@
 public class App {
-    public static void main(String[] args) throws Exception {
-        System.out.println("Hello, World!");
+    static int[] queue = new int[5];
+    static int front = -1;
+    static int rear = -1;
+    public static void main(String[] args) {
+        enqueue(5);
+        System.out.println("Front: " + front + " Rear: " + rear);
+        System.out.println("Queue: " + java.util.Arrays.toString(queue));
+
+        enqueue(10);
+        System.out.println("Front: " + front + " Rear: " + rear);
+        System.out.println("Queue: " + java.util.Arrays.toString(queue));
+
+        enqueue(15);
+        System.out.println("Front: " + front + " Rear: " + rear);
+        System.out.println("Queue: " + java.util.Arrays.toString(queue));
+
+        enqueue(20);
+        System.out.println("Front: " + front + " Rear: " + rear);
+        System.out.println("Queue: " + java.util.Arrays.toString(queue));
+
+        enqueue(25);
+        System.out.println("Front: " + front + " Rear: " + rear);
+        System.out.println("Queue: " + java.util.Arrays.toString(queue));
+
+        enqueue(30);
+        System.out.println("Front: " + front + " Rear: " + rear);
+        System.out.println("Queue: " + java.util.Arrays.toString(queue));
+
+        dequeue();
+        System.out.println("Front: " + front + " Rear: " + rear);
+        System.out.println("Queue: " + java.util.Arrays.toString(queue));
+
+        dequeue();
+        System.out.println("Front: " + front + " Rear: " + rear);
+        System.out.println("Queue: " + java.util.Arrays.toString(queue));
+
+        dequeue();
+        System.out.println("Front: " + front + " Rear: " + rear);
+        System.out.println("Queue: " + java.util.Arrays.toString(queue));
+    }
+    public static void enqueue(int item) {
+        if (rear == queue.length - 1) {
+            System.out.println("Queue is full");
+        } else {
+            if (front == -1) {
+                front = 0;
+            }
+            rear++;
+            queue[rear] = item;
+            System.out.println("Inserted " + item);
+        }
+    }
+    public static int dequeue() {
+        int item = -1;
+        if (front == -1) {
+            System.out.println("Queue is empty");
+        } else {
+            item = queue[front];
+            if (front == rear) {
+                front = -1;
+                rear = -1;
+            } else {
+                front++;
+            }
+            System.out.println("Deleted " + item);
+        }
+        return item;
     }
 }
+
+
