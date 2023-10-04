@@ -1,25 +1,35 @@
+import java.util.Scanner;
+
 public class App {
     static int[] queue = new int[5];
     static int front = -1;
     static int rear = -1;
     public static void main(String[] args) {
-        enqueue(5);
-        enqueue(10);
-        enqueue(15);
-        enqueue(20);
-        enqueue(25);
-        enqueue(30);
-
-        dequeue();
-        dequeue();
-        dequeue();
-        dequeue();
-        dequeue();
-        dequeue();
-
-        enqueue(2);
-        enqueue(4);
-        enqueue(6);
+        Scanner sc = new Scanner(System.in);
+        boolean exit = false;
+        System.out.println("Queues");
+        while(!exit){
+            System.out.println("------");
+            System.out.println("1. Enqueue");
+            System.out.println("2. Dequeue");
+            System.out.println("3. Exit");            
+            int choice = Integer.parseInt(sc.nextLine());
+            switch(choice){
+                case 1:
+                    System.out.println("Enter item to enqueue");
+                    int item = Integer.parseInt(sc.nextLine());
+                    enqueue(item);
+                    break;
+                case 2:
+                    dequeue();
+                    break;
+                default:
+                    exit = true;
+                    break;
+            }
+        }
+        sc.close();
+        
     }
     public static void enqueue(int item) {
         if (rear == queue.length - 1) {
