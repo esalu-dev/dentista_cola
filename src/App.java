@@ -4,40 +4,22 @@ public class App {
     static int rear = -1;
     public static void main(String[] args) {
         enqueue(5);
-        System.out.println("Front: " + front + " Rear: " + rear);
-        System.out.println("Queue: " + java.util.Arrays.toString(queue));
-
         enqueue(10);
-        System.out.println("Front: " + front + " Rear: " + rear);
-        System.out.println("Queue: " + java.util.Arrays.toString(queue));
-
         enqueue(15);
-        System.out.println("Front: " + front + " Rear: " + rear);
-        System.out.println("Queue: " + java.util.Arrays.toString(queue));
-
         enqueue(20);
-        System.out.println("Front: " + front + " Rear: " + rear);
-        System.out.println("Queue: " + java.util.Arrays.toString(queue));
-
         enqueue(25);
-        System.out.println("Front: " + front + " Rear: " + rear);
-        System.out.println("Queue: " + java.util.Arrays.toString(queue));
-
         enqueue(30);
-        System.out.println("Front: " + front + " Rear: " + rear);
-        System.out.println("Queue: " + java.util.Arrays.toString(queue));
 
         dequeue();
-        System.out.println("Front: " + front + " Rear: " + rear);
-        System.out.println("Queue: " + java.util.Arrays.toString(queue));
-
         dequeue();
-        System.out.println("Front: " + front + " Rear: " + rear);
-        System.out.println("Queue: " + java.util.Arrays.toString(queue));
-
         dequeue();
-        System.out.println("Front: " + front + " Rear: " + rear);
-        System.out.println("Queue: " + java.util.Arrays.toString(queue));
+        dequeue();
+        dequeue();
+        dequeue();
+
+        enqueue(2);
+        enqueue(4);
+        enqueue(6);
     }
     public static void enqueue(int item) {
         if (rear == queue.length - 1) {
@@ -49,6 +31,7 @@ public class App {
             rear++;
             queue[rear] = item;
             System.out.println("Inserted " + item);
+            showStatus();
         }
     }
     public static int dequeue() {
@@ -64,8 +47,14 @@ public class App {
                 front++;
             }
             System.out.println("Deleted " + item);
+            showStatus();
         }
         return item;
+    }
+    public static void showStatus(){
+        System.out.println("Front: " + front + " Rear: " + rear);
+        System.out.println("Queue: " + java.util.Arrays.toString(queue));
+
     }
 }
 
