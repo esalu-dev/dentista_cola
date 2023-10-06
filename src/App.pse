@@ -1,0 +1,65 @@
+Algoritmo Cola
+   Entero queue[5]
+   Entero front <- -1
+   Entero rear <- -1
+
+   Función Enqueue(Entero item)
+      Si rear = longitud(queue) - 1 Entonces
+         Escribir("La cola está llena")
+      Sino
+         Si front = -1 Entonces
+               front <- 0
+         Fin Si
+         rear <- rear + 1
+         queue[rear] <- item
+         Escribir("Insertado " + item)
+         MostrarEstado()
+      Fin Si
+   Fin Función
+
+   Función Dequeue() -> Entero
+      Entero item <- -1
+      Si front = -1 Entonces
+         Escribir("La cola está vacía")
+      Sino
+         item <- queue[front]
+         Si front = rear Entonces
+               front <- -1
+               rear <- -1
+         Sino
+               front <- front + 1
+         Fin Si
+         Escribir("Eliminado " + item)
+         MostrarEstado()
+      Fin Si
+      Devolver item
+   Fin Función
+
+   Función MostrarEstado()
+      Escribir("Front: " + front + " Rear: " + rear)
+      Escribir("Cola: " + ConvertirACadena(queue))
+   Fin Función
+
+   Procedimiento Principal()
+      Booleano exit <- Falso
+      Escribir("Colas")
+      Mientras No exit Hacer
+         Escribir("------")
+         Escribir("1. Encolar")
+         Escribir("2. Desencolar")
+         Escribir("3. Salir")
+         Entero choice <- LeerEntero()
+         Según choice Hacer
+               Caso 1:
+                  Escribir("Ingrese el elemento para encolar")
+                  Entero elemento <- LeerEntero()
+                  Enqueue(elemento)
+               Caso 2:
+                  Dequeue()
+               De Otro Modo:
+                  exit <- Verdadero
+               Fin Según
+         Fin Mientras
+      Fin Mientras
+   Fin Procedimiento
+Fin Algoritmo
