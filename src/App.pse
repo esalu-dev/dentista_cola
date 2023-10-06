@@ -3,7 +3,7 @@ Algoritmo Cola
    Entero front <- -1
    Entero rear <- -1
 
-   Función Enqueue(Entero item)
+   Funcion Enqueue(Entero item)
       Si rear = longitud(queue) - 1 Entonces
          Escribir("La cola está llena")
       Sino
@@ -15,9 +15,9 @@ Algoritmo Cola
          Escribir("Insertado " + item)
          MostrarEstado()
       Fin Si
-   Fin Función
+   Fin Funcion
 
-   Función Dequeue() -> Entero
+   Funcion Dequeue() -> Entero
       Entero item <- -1
       Si front = -1 Entonces
          Escribir("La cola está vacía")
@@ -33,14 +33,14 @@ Algoritmo Cola
          MostrarEstado()
       Fin Si
       Devolver item
-   Fin Función
+   Fin Funcion
 
-   Función MostrarEstado()
+   Funcion MostrarEstado()
       Escribir("Front: " + front + " Rear: " + rear)
       Escribir("Cola: " + ConvertirACadena(queue))
-   Fin Función
+   Fin Funcion
 
-   Procedimiento Principal()
+   Funcion Principal()
       Booleano exit <- Falso
       Escribir("Colas")
       Mientras No exit Hacer
@@ -61,5 +61,5 @@ Algoritmo Cola
                Fin Según
          Fin Mientras
       Fin Mientras
-   Fin Procedimiento
+   Fin Funcion
 Fin Algoritmo
