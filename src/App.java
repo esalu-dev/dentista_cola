@@ -33,8 +33,20 @@ public class App {
     }
     public static void enqueue(int item) {
         if (rear == queue.length - 1) {
+        if(front == 0){
             System.out.println("Queue is full");
+            return;
+        }else {
+            rear = 0;
+            queue[rear] = item;
+            System.out.println("Inserted " + item);
+            showStatus();
+        }
         } else {
+            if(rear == front - 1){
+                System.out.println("Queue is full");
+                return;
+            }
             if (front == -1) {
                 front = 0;
             }
@@ -50,7 +62,7 @@ public class App {
             System.out.println("Queue is empty");
         } else {
             item = queue[front];
-            if (front == rear) {
+            if (front % queue.length == rear) {
                 front = -1;
                 rear = -1;
             } else {
