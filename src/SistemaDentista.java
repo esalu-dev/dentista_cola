@@ -133,12 +133,15 @@ class Cola{
                realQueue[i] = this.queue[i];
             }
       } else {
-            for (int i = this.front; i < this.maxSize; i++) {
-               realQueue[i] = this.queue[i];
-            }
-            for (int i = 0; i <= this.rear; i++) {
-               realQueue[i] = this.queue[i];
-            }
+         int j = 0;
+         for (int i = this.front; i < this.maxSize; i++) {
+            realQueue[j] = this.queue[i];
+            j++;
+         }
+         for (int i = 0; i <= this.rear; i++) {
+            realQueue[j] = this.queue[i];
+            j++;
+         }
       }
       for(int i = 0; i < realQueue.length; i++){
          System.out.println(realQueue[i]);
@@ -160,7 +163,7 @@ class Boton extends JButton{
 public class SistemaDentista {
    public static void main(String[] args) {
 
-      Cola cola = new Cola(2);
+      Cola cola = new Cola(3);
 
       JFrame ventana = new JFrame("Sistema de Dentista");
       JPanel panel = new JPanel();
