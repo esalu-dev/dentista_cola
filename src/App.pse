@@ -1,65 +1,72 @@
-Algoritmo Cola
-   Entero queue[5]
-   Entero front <- -1
-   Entero rear <- -1
+Inicio
+   Entero maxSize
+   Entero front
+   Entero rear
+   Entero[] queue
 
-   Funcion Enqueue(Entero item)
-      Si rear = longitud(queue) - 1 Entonces
-         Escribir("La cola está llena")
+   Funcion Cola(tamaño)
+      maxSize <- tamaño
+      front <- -1
+      rear <- -1
+      queue <- Arreglo de Entero de tamaño maxSize
+   Fin Funcion
+
+   Funcion Vacía() -> Booleano
+      Devolver (front == -1)
+   Fin Funcion
+
+   Funcion Llena() -> Booleano
+      Devolver ((front == 0 Y rear == maxSize - 1) O (front == rear + 1))
+   Fin Funcion
+
+   Funcion Encolar(dato)
+      Si Llena() Entonces
+         Imprimir "La cola está llena. No se puede agregar más elementos."
       Sino
-         Si front = -1 Entonces
+         Si front == -1 Entonces
                front <- 0
          Fin Si
-         rear <- rear + 1
-         queue[rear] <- item
-         Escribir("Insertado " + item)
-         MostrarEstado()
+         rear <- (rear + 1) Módulo maxSize
+         queue[rear] <- dato
+         Imprimir "Se agregó el elemento " + dato + " a la cola."
       Fin Si
    Fin Funcion
 
-   Funcion Dequeue() -> Entero
-      Entero item <- -1
-      Si front = -1 Entonces
-         Escribir("La cola está vacía")
+   Funcion Desencolar() -> Entero
+      Entero dato
+      Si Vacía() Entonces
+         Imprimir "La cola está vacía. No se puede eliminar ningún elemento."
+         Devolver -1
       Sino
-         item <- queue[front]
-         Si front = rear Entonces
-               front <- -1
-               rear <- -1
+         dato <- queue[front]
+         Si front == rear Entonces
+               front <- rear <- -1
          Sino
-               front <- front + 1
+               front <- (front + 1) Módulo maxSize
          Fin Si
-         Escribir("Eliminado " + item)
-         MostrarEstado()
+         Imprimir "Se eliminó el elemento " + dato + " de la cola."
+         Devolver dato
       Fin Si
-      Devolver item
    Fin Funcion
 
-   Funcion MostrarEstado()
-      Escribir("Front: " + front + " Rear: " + rear)
-      Escribir("Cola: " + ConvertirACadena(queue))
+   Funcion ImprimirCola(cola)
+      Si cola.Vacía() Entonces
+         Imprimir "La cola está vacía."
+      Sino
+         Imprimir "La cola contiene los siguientes elementos:"
+         Si cola.front <= cola.rear Entonces
+               Para i <- cola.front Hasta cola.rear
+                  Imprimir cola.queue[i] + ","
+               Fin Para
+         Sino
+               Para i <- cola.front Hasta cola.maxSize - 1
+                  Imprimir cola.queue[i] + ","
+               Fin Para
+               Para i <- 0 Hasta cola.rear
+                  Imprimir cola.queue[i] + ","
+               Fin Para
+         Fin Si
+      Fin Si
    Fin Funcion
 
-   Funcion Principal()
-      Booleano exit <- Falso
-      Escribir("Colas")
-      Mientras No exit Hacer
-         Escribir("------")
-         Escribir("1. Encolar")
-         Escribir("2. Desencolar")
-         Escribir("3. Salir")
-         Entero choice <- LeerEntero()
-         Según choice Hacer
-               Caso 1:
-                  Escribir("Ingrese el elemento para encolar")
-                  Entero elemento <- LeerEntero()
-                  Enqueue(elemento)
-               Caso 2:
-                  Dequeue()
-               De Otro Modo:
-                  exit <- Verdadero
-               Fin Según
-         Fin Mientras
-      Fin Mientras
-   Fin Funcion
-Fin Algoritmo
+Fin Clase
