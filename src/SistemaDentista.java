@@ -163,7 +163,23 @@ class Boton extends JButton{
 public class SistemaDentista {
    public static void main(String[] args) {
 
-      Cola cola = new Cola(3);
+      int num = 0;
+      while(true){
+         try{
+            num = Integer.parseInt(JOptionPane.showInputDialog("Ingrese el número de pacientes que puede atender el dentista (Max: 9)"));
+            if(num <= 0 || num > 9){
+               JOptionPane.showMessageDialog(null, "No se ingresó un número válido.", "Error", JOptionPane.ERROR_MESSAGE);
+               continue;
+            }
+            break;
+         } catch (NumberFormatException exception){
+            
+            JOptionPane.showMessageDialog(null, "No se ingresó un número válido.", "Error", JOptionPane.ERROR_MESSAGE);
+         }
+        
+      }
+
+      Cola cola = new Cola(num);
 
       JFrame ventana = new JFrame("Sistema de Dentista");
       JPanel panel = new JPanel();
@@ -201,7 +217,7 @@ public class SistemaDentista {
          }
       };
 
-      Boton[] pacientesButton = new Boton[9];
+      Boton[] pacientesButton = new Boton[num];
       for (int i = 0; i < pacientesButton.length; i++) {
          pacientesButton[i] = new Boton();
          // pacientes[i].setEditable(false);
@@ -234,7 +250,7 @@ public class SistemaDentista {
                }
                Paciente paciente = new Paciente(nombre, edad, padecimiento);
                cola.enqueue(paciente);
-               JOptionPane.showMessageDialog(null, "Se agregó el paciente " + paciente.nombre + " a la cola.");
+               JOptionPane.showMessageDialog(null, "Se agregó el paciente " + paciente.getNombre() + " a la cola.");
                updateData(cola, pacientesButton);
          }
       });
@@ -243,7 +259,12 @@ public class SistemaDentista {
                JOptionPane.showMessageDialog(null, "La cola está vacía. No se puede atender ningún paciente.");
          } else {
                Paciente paciente = cola.dequeue();
-               JOptionPane.showMessageDialog(null, "Se atendió el paciente " + paciente + " de la cola.");
+               int opcion = JOptionPane.showConfirmDialog(null, "¿Desea atender al paciente " + paciente.getNombre() + "?", "Atender paciente", JOptionPane.YES_NO_OPTION);
+               if(opcion != JOptionPane.YES_OPTION){
+                  JOptionPane.showMessageDialog(null, "No se atendió al paciente " + paciente.getNombre() + ".");
+                  return;
+               }
+               JOptionPane.showMessageDialog(null, "Se atendió el paciente " + paciente.getNombre() + " de la cola.");
                updateData(cola, pacientesButton);
          }
       });
