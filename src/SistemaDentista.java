@@ -1,16 +1,12 @@
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionListener;
-import java.io.IOException;
-import java.text.NumberFormat;
-import java.util.Scanner;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
 
 class Paciente{
    String nombre;
@@ -54,6 +50,7 @@ class Paciente{
 }
 
 class Cola{
+
    private int maxSize;
    private int front;
    private int rear;
@@ -105,21 +102,21 @@ class Cola{
    }
 
    
-   private static void printQueue(Cola queue) {
-      if (queue.isEmpty()) {
+   private void printQueue() {
+      if (this.isEmpty()) {
          System.out.println("La cola está vacía.");
       } else {
          System.out.println("La cola contiene los siguientes elementos:");
-         if (queue.front <= queue.rear) {
-               for (int i = queue.front; i <= queue.rear; i++) {
-                  System.out.print(queue.queue[i]+", ");
+         if (this.front <= this.rear) {
+               for (int i = this.front; i <= this.rear; i++) {
+                  System.out.print(this.queue[i]+", ");
                }
          } else {
-               for (int i = queue.front; i < queue.maxSize; i++) {
-                  System.out.print(queue.queue[i]+", ");
+               for (int i = this.front; i < this.maxSize; i++) {
+                  System.out.print(this.queue[i]+", ");
                }
-               for (int i = 0; i <= queue.rear; i++) {
-                  System.out.print(queue.queue[i]+", ");
+               for (int i = 0; i <= this.rear; i++) {
+                  System.out.print(this.queue[i]+", ");
                }
          }
          System.out.println();
@@ -127,45 +124,30 @@ class Cola{
    }
 
    public Paciente[] getRealQueue(){
-      Paciente[] realQueue = new Paciente[maxSize];
-      if (front <= rear) {
-            for (int i = front; i <= rear; i++) {
-               if(front < 0 || rear < 0){
+      Paciente[] realQueue = new Paciente[this.maxSize];
+      if (this.front <= this.rear) {
+            for (int i = this.front; i <= this.rear; i++) {
+               if(this.front < 0 || this.rear < 0){
                   break;
                }
-               realQueue[i] = queue[i];
+               realQueue[i] = this.queue[i];
             }
       } else {
-            for (int i = front; i < maxSize; i++) {
-               realQueue[i] = queue[i];
+            for (int i = this.front; i < this.maxSize; i++) {
+               realQueue[i] = this.queue[i];
             }
-            for (int i = 0; i <= rear; i++) {
-               realQueue[i] = queue[i];
+            for (int i = 0; i <= this.rear; i++) {
+               realQueue[i] = this.queue[i];
             }
+      }
+      for(int i = 0; i < realQueue.length; i++){
+         System.out.println(realQueue[i]);
       }
       return realQueue;
    }
 }
 
-public class SistemaDentista {
-
-   public static void clearScreen(){
-    try {
-      if (System.getProperty("os.name").contains("Windows")) {
-        // Si estás en Windows, utiliza "cls" para limpiar la consola
-        new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
-      } else {
-          // En otros sistemas, utiliza "clear" para limpiar la consola
-          Runtime.getRuntime().exec("clear");
-      }
-      } catch (InterruptedException e) {
-        e.printStackTrace();
-      } catch (IOException e) {
-        e.printStackTrace();
-      }
-  }
-   
-   public static class Boton extends JButton{
+class Boton extends JButton{
       Paciente paciente;
       public Boton(){
          super();
@@ -175,10 +157,8 @@ public class SistemaDentista {
       }
    }
 
+public class SistemaDentista {
    public static void main(String[] args) {
-      boolean salir = false;
-      int opcion; //Guardaremos la opcion del usuario
-      Scanner sc = new Scanner(System.in);
 
       Cola cola = new Cola(2);
 
@@ -233,11 +213,25 @@ public class SistemaDentista {
                JOptionPane.showMessageDialog(null, "La cola está llena. No se puede agregar más elementos.");
          } else {
                String nombre = JOptionPane.showInputDialog("Ingrese el nombre del paciente");
-               int edad = Integer.parseInt(JOptionPane.showInputDialog("Ingrese la edad del paciente"));
+               if(nombre == null || nombre.equals("")){
+                  JOptionPane.showMessageDialog(null, "No se ingresó ningún nombre.", "Error", JOptionPane.ERROR_MESSAGE);
+                  return;
+               }
+               int edad;
+               try{
+                  edad = Integer.parseInt(JOptionPane.showInputDialog("Ingrese la edad del paciente"));
+               } catch (NumberFormatException exception){
+                  JOptionPane.showMessageDialog(null, "No se ingresó una edad válida.", "Error", JOptionPane.ERROR_MESSAGE);
+                  return;
+               }
                String padecimiento = JOptionPane.showInputDialog("Ingrese el padecimiento del paciente");
+               if(padecimiento == null || padecimiento.equals("")){
+                  JOptionPane.showMessageDialog(null, "No se ingresó ningún padecimiento.", "Error", JOptionPane.ERROR_MESSAGE);
+                  return;
+               }
                Paciente paciente = new Paciente(nombre, edad, padecimiento);
                cola.enqueue(paciente);
-               JOptionPane.showMessageDialog(null, "Se agregó el paciente " + paciente + " a la cola.");
+               JOptionPane.showMessageDialog(null, "Se agregó el paciente " + paciente.nombre + " a la cola.");
                updateData(cola, pacientesButton);
          }
       });
@@ -261,6 +255,7 @@ public class SistemaDentista {
    public static void updateData(Cola cola, Boton[] pacientes){
       for(int i = 0; i < pacientes.length; i++){
          pacientes[i].setText("");
+         pacientes[i].setPaciente(null);
       }
       int i = 0;
       for(Paciente paciente : cola.getRealQueue()){
