@@ -1,5 +1,6 @@
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.text.NumberFormat;
 import java.util.Scanner;
@@ -164,7 +165,15 @@ public class SistemaDentista {
       }
   }
    
-   
+   public static class Boton extends JButton{
+      Paciente paciente;
+      public Boton(){
+         super();
+      }
+      public void setPaciente(Paciente paciente){
+         this.paciente = paciente;
+      }
+   }
 
    public static void main(String[] args) {
       boolean salir = false;
@@ -198,16 +207,26 @@ public class SistemaDentista {
       panel.add(boton2);
 
       
-      
+      ActionListener actionListener = e -> {
+         if(e.getSource() instanceof Boton){
+            Boton boton = (Boton) e.getSource();
+            if(boton.paciente == null){
+               JOptionPane.showMessageDialog(null, "No hay paciente en este botón.", "Información del paciente", JOptionPane.INFORMATION_MESSAGE);
+               return;
+            }
+            JOptionPane.showMessageDialog(null, "Nombre: " + boton.paciente.getNombre() + "\nEdad: " + boton.paciente.getEdad() + "\nPadecimiento: " + boton.paciente.getPadecimiento(), "Información del paciente", JOptionPane.INFORMATION_MESSAGE);
+         }
+      };
 
-      JTextField[] textFields = new JTextField[9];
-      for (int i = 0; i < textFields.length; i++) {
-         textFields[i] = new JTextField();
-         textFields[i].setEditable(false);
-         textFields[i].setBackground(Color.decode("#ffffff"));
-         textFields[i].setFont(new Font("Poppins", Font.PLAIN, 16));
-         textFields[i].setBounds(50, 50 + (i * 40), 500, 30);
-         panel.add(textFields[i]);
+      Boton[] pacientesButton = new Boton[9];
+      for (int i = 0; i < pacientesButton.length; i++) {
+         pacientesButton[i] = new Boton();
+         // pacientes[i].setEditable(false);
+         pacientesButton[i].setBackground(Color.decode("#ffffff"));
+         pacientesButton[i].setFont(new Font("Poppins", Font.PLAIN, 16));
+         pacientesButton[i].setBounds(50, 50 + (i * 40), 500, 30);
+         pacientesButton[i].addActionListener(actionListener);
+         panel.add(pacientesButton[i]);
       }
       boton1.addActionListener(e -> {
          if (cola.isFull()) {
@@ -219,7 +238,7 @@ public class SistemaDentista {
                Paciente paciente = new Paciente(nombre, edad, padecimiento);
                cola.enqueue(paciente);
                JOptionPane.showMessageDialog(null, "Se agregó el paciente " + paciente + " a la cola.");
-               updateData(cola, textFields);
+               updateData(cola, pacientesButton);
          }
       });
       boton2.addActionListener(e -> {
@@ -228,7 +247,7 @@ public class SistemaDentista {
          } else {
                Paciente paciente = cola.dequeue();
                JOptionPane.showMessageDialog(null, "Se atendió el paciente " + paciente + " de la cola.");
-               updateData(cola, textFields);
+               updateData(cola, pacientesButton);
          }
       });
       ventana.setSize(600, 600);
@@ -239,14 +258,15 @@ public class SistemaDentista {
 
    }
 
-   public static void updateData(Cola cola, JTextField[] textFields){
-      for(int i = 0; i < textFields.length; i++){
-         textFields[i].setText("");
+   public static void updateData(Cola cola, Boton[] pacientes){
+      for(int i = 0; i < pacientes.length; i++){
+         pacientes[i].setText("");
       }
       int i = 0;
       for(Paciente paciente : cola.getRealQueue()){
          if(paciente != null){
-               textFields[i].setText(paciente.getNombre());
+               pacientes[i].setText(paciente.getNombre());
+               pacientes[i].setPaciente(paciente);
                i++;
          }
       }
