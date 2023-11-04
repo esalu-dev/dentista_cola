@@ -3,94 +3,96 @@ Funcion InsertarEnListaOrdenadaRepetir(dato):
    nodoNuevo <- CrearNodo(dato)
    
    Si cabeza es Nula:
-      cabeza = nodoNuevo
+      cabeza <- nodoNuevo
       Devolver
    
    Si dato < nodoActual.dato:
-      nodoNuevo.siguiente = cabeza
-      cabeza.anterior = nodoNuevo
-      cabeza = nodoNuevo
+      nodoNuevo.siguiente <- cabeza
+      cabeza.anterior <- nodoNuevo
+      cabeza <- nodoNuevo
       Devolver
 
    Mientras nodoActual.siguiente no sea Nulo:
       Si dato < nodoActual.siguiente.dato:
-         nodoNuevo.siguiente = nodoActual.siguiente
-         nodoActual.siguiente.anterior = nodoNuevo
-         nodoNuevo.anterior = nodoActual
-         nodoActual.siguiente = nodoNuevo
+         nodoNuevo.siguiente <- nodoActual.siguiente
+         nodoActual.siguiente.anterior <- nodoNuevo
+         nodoNuevo.anterior <- nodoActual
+         nodoActual.siguiente <- nodoNuevo
          Devolver
-      Sino Si dato == nodoActual.siguiente.dato:
-         nodoNuevo.siguiente = nodoActual.siguiente.siguiente
+      Sino Si dato = nodoActual.siguiente.dato:
+         nodoNuevo.siguiente <- nodoActual.siguiente.siguiente
          Si nodoNuevo.siguiente no es Nulo:
-               nodoNuevo.siguiente.anterior = nodoNuevo
-         nodoActual.siguiente = nodoNuevo
-         nodoNuevo.anterior = nodoActual
+               nodoNuevo.siguiente.anterior <- nodoNuevo
+         nodoActual.siguiente <- nodoNuevo
+         nodoNuevo.anterior <- nodoActual
          Devolver
       
-      nodoActual = nodoActual.siguiente
+      nodoActual <- nodoActual.siguiente
 
-   nodoActual.siguiente = nodoNuevo
-   nodoNuevo.anterior = nodoActual
+   nodoActual.siguiente <- nodoNuevo
+   nodoNuevo.anterior <- nodoActual
 Fin Funcion
 
 Funcion EliminarEnListaOrdenadaRepetir(dato):
-   nodoActual = cabeza
+   nodoActual <- cabeza
 
    Mientras nodoActual no sea Nulo:
-      Si nodoActual.dato == dato:
-         nodoAnterior = nodoActual.anterior
-         nodoSiguiente = nodoActual.siguiente
-         nodoAnterior.siguiente = nodoSiguiente
+      Si nodoActual.dato = dato:
+         nodoAnterior <- nodoActual.anterior
+         nodoSiguiente <- nodoActual.siguiente
+         nodoAnterior.siguiente <- nodoSiguiente
          Si nodoSiguiente no es Nulo:
-               nodoSiguiente.anterior = nodoAnterior
+               nodoSiguiente.anterior <- nodoAnterior
          Sino
-               cola = nodoAnterior
-         nodoEliminar = nodoActual
-         nodoActual = nodoActual.siguiente
+               cola <- nodoAnterior
+         nodoEliminar <- nodoActual
+         nodoActual <- nodoActual.siguiente
          LiberarMemoria(nodoEliminar)
       Sino
-         nodoActual = nodoActual.siguiente
+         nodoActual <- nodoActual.siguiente
    Fin Mientras
 Fin Funcion
 
+
 Funcion RecorrerListaEnlazadaRepetir():
-   nodoActual = cabeza
+   nodoActual <- cabeza
 
    Mientras nodoActual no sea Nulo:
       Imprimir nodoActual.dato
-      nodoActual = nodoActual.siguiente
+      nodoActual <- nodoActual.siguiente
    Fin Mientras
 Fin Funcion
 
 Funcion BuscarEnListaEnlazadaRepetir(dato):
-   nodoActual = cabeza
+   nodoActual <- cabeza
 
    Mientras nodoActual no sea Nulo:
-      Si nodoActual.dato == dato:
+      Si nodoActual.dato = dato:
          Escribir "El dato se encuentra en la lista"
          Escribir "Posicion: ", nodoActual
          Devolver Verdadero
-      nodoActual = nodoActual.siguiente
+      nodoActual <- nodoActual.siguiente
    Fin Mientras
    Devolver Falso
 Fin Funcion
 
 Funcion ModificarEnListaEnlazadaRepetir(datoBuscar, datoModificar):
-   nodoActual = cabeza
+   nodoActual <- cabeza
 
    Mientras nodoActual no sea Nulo:
-      Si nodoActual.dato == datoBuscar:
-         nodoActual.dato = datoModificar
-      nodoActual = nodoActual.siguiente
+      Si nodoActual.dato = datoBuscar:
+         nodoActual.dato <- datoModificar
+      nodoActual <- nodoActual.siguiente
    Fin Mientras
 Fin Funcion
 
 Funcion MostrarListaEnlazadaRepetir():
-   nodoActual = cabeza
+   nodoActual <- cabeza
 
    Mientras nodoActual no sea Nulo:
       Imprimir nodoActual.dato
-      nodoActual = nodoActual.siguiente
+      nodoActual <- nodoActual.siguiente
    Fin Mientras
 Fin Funcion
+
 
