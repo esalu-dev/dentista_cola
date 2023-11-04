@@ -16,7 +16,7 @@ public class App {
     }
 
     public boolean isFull() {
-        return (front == 0 && rear == maxSize - 1) || (front == rear + 1);
+        return rear == maxSize - 1;
     }
 
     public void enqueue(int data) {
@@ -26,7 +26,7 @@ public class App {
             if (front == -1) {
                 front = 0;
             }
-            rear = (rear + 1) % maxSize;
+            rear = (rear + 1);
             queue[rear] = data;
             System.out.println("Se agregó el elemento " + data + " a la cola.");
         }
@@ -42,7 +42,7 @@ public class App {
             if (front == rear) {
                 front = rear = -1;
             } else {
-                front = (front + 1) % maxSize;
+                front = (front + 1);
             }
             System.out.println("Se eliminó el elemento " + data + " de la cola.");
             return data;
